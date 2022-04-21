@@ -1,0 +1,164 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+/* Frontpage, Background */
+.fp_bg {
+    height: 900px;
+    width: 100%;
+    background-image: linear-gradient(rgba(47, 102, 144, 0.4), rgba(47, 102, 144, 0.2)), url(images/west-highlands.jpg);
+    background-position: center;
+    background-size: auto;
+    position: relative;
+}
+/* Frontpage, Header */
+.fp_header {
+    height: 60px;
+    background-color: #2F6690;
+}
+picture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+/* Navigation */
+.navigation {
+    flex: 1;
+    text-align: right;
+}
+.navigation ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 4px 46px;
+    position: relative;
+}
+.navigation ul li a {
+    color: #D9DCD6;
+    text-decoration: none;
+    font-size: 22px;
+}
+.navigation ul li a:hover {
+    color: #16425B; 
+}
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+/* Frontpage, Search */
+.fp_search {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.fp_search input[type=text] {
+    width: 500px;
+    height: 62px;
+    font-size: 18px;
+    text-align: center;
+    border: none;
+    color: #16425B;
+    background-color: #D9DCD6
+}
+
+.fp_search input::placeholder {
+    color: #16425B;
+    font-style: italic;
+}
+
+.fp_search button {
+    height: 62px;
+    width: 140px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    color: #D9DCD6;
+    background-color: #16425B
+}
+
+/* Frontpage, Text */
+.fp_text { 
+    color: #D9DCD6;
+    font-size: 50px;
+    font-style: italic;
+    padding: 200px;
+    text-align: center;
+}
+
+.fp_text p {
+    text-align: center;
+}
+
+.fp_text p.p_author {
+    font-size: 20px;
+    font-style: normal
+}
+
+/* Frontpage, Showcase */
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.loc_col {
+    box-shadow: 5px 10px #888888;
+    background-color: #2F6690;
+    float: left;
+    width: 33.33%;
+    text-align: center;
+    flex: 33.33%;
+    position: relative; 
+    overflow: hidden;
+}
+
+.loc_col img {
+    border: 3px solid #81C3D7;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 300px;
+    width: 500px;
+    background-size: auto;
+    transition: 0.5s;
+}
+
+.loc_info {
+    opacity: 0;
+    position: absolute;
+    width: 500px;
+    height: 100px;
+    top: 77%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    transition: 0.5s;
+    color: #D9DCD6;
+    font-size: 20px;
+}
+
+.loc_text {
+    font-style: bold;
+    margin-top: 10px;
+}
+
+.loc_info p {
+    font-style: italic;
+    font-size: 14px;
+}
+
+.loc_info .p_desc {
+    font-style: normal;
+    font-size: 18px;
+}
+
+.loc_col:hover .loc_info {
+    opacity: 1;
+    background-color: #16425B;
+}
+
+.loc_col:hover img {
+    filter: grayscale(0.30);
+}
