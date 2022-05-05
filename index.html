@@ -1,63 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name = "viewport" content = "width = divice-width, inital-scale = 1.0">
-    <title>Scottish Highlands - LukeA MR</title>
-    <link rel = "stylesheet" href = "style.css">
+    <title>Prototype Car Image Recognition</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<input type="file" id="picture" name="picture" accept="image/png, image/jpeg" onchange="uploadFile(this)">
+	<div>
+		<img src="" id="image-output" style="width:300px;height:200px;">
+	</div>
+	<p id = "predictions">Predictions:</p>
 </head>
 <body>
-    <section class = "fp_header">
-        <picture>
-            <a href="index.html"><img src = "images/logo_small.png"></a>
-        </picture>
-        <nav>
-            <div class = "navigation">
-                <ul>
-                    <li><a href = "">Locations</a></li>
-                    <li><a href = "">Media</a></li>
-                    <li><a href = "">FAQ</a></li>
-                    <li><a href = "">Login</a></li>
-                </ul>
-            </div>
-        </nav>
-    </section>
-    <section class = "fp_bg">
-        <div class = "fp_text">
-            <p>"Wherever I wander,<br>wherever I rove,<br>The hills of the Highlands<br>forever I love."</p>
-            <p class = "p_author">Robert Burns</p>
-        </div>
-        <div class = "fp_search">
-            <input type = "text" placeholder = "Begin your unique journey...">
-            <button type = "search">Search</button>
-        </div>
-    </section>
-    <section class = "fp_loc_showcase">
-        <div class = "loc_row">
-            <div class = " loc_col">
-                <img src = "images/buachaille-etive-beag-glencoe.jpg">
-                <div class = "loc_info">
-                    <div class = "loc_text">Glen Coe</div>
-                    <p>"Soaring, dramatic splendour..."</p>
-                    <p class = "p_desc">Home of Scottish mountaineering,<br>the go-to for hillwalkers and climbers.</p>
-                </div>
-            </div>
-            <div class = " loc_col">
-                <img src = "images/isle-of-skye.jpg">
-                <div class = "loc_info">
-                    <div class = "loc_text">Isle of Skye</div>
-                    <p>"Breathtaking, rugged and outstanding scenery..."</p>
-                    <p class = "p_desc">It will make you feel like you have entered another world.<br>The largest island in the Inner Herbrides.</p>
-                </div>
-            </div>
-            <div class = " loc_col">
-                <img src = "images/kilchum-castle.jpg">
-                <div class = "loc_info">
-                    <div class = "loc_text">Kilchum Castle</div>
-                    <p>"One of the most photographed castles in Scotland..."</p>
-                    <p class = "p_desc">Relive history walking the halls of this ruined fortress,<br>once the powerbase of the Campbell clan.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+
+<script>
+	const predictionURL = 'https://mrcaraitp-prediction.cognitiveservices.azure.com/customvision/v3.0/Prediction/0bb3766a-0ef0-4878-822f-0fb060ea37e7/classify/iterations/Iteration5/image?'
+	const mainContainer = document.getElementById("predictions");
+
+	let currentImageName = ""
+
+	function uploadFile(fileInput) {
+		let formdata = new FormData();
+		formdata.append("image", fileInput.files[0]);
+
+		var img = document.getElementById('image-output');
+		img.src = URL.createObjectURL(fileInput.files[0]);
+
+		currentImageName = fileInput.files[0].name
+		sendRequest(formdata)
+	}
+
+	function sendRequest(formdata) {
+		const options = {
+			method: 'POST',
+			body: formdata,
+			headers: {
+				'Prediction-key': '29ee6405f0d142639f658c107e46e50b'
+			}
+		}
+
+		fetch(predictionURL, options)
+			.then(res => res.json())
+			.then(res => addPrediction(res))
+	}
+
+	function addPrediction(data) {
+		const arraySize = data.predictions.length
+		const allPredictions = data.predictions
+
+		let name = document.createElement("div")
+		name.innerHTML = 'Name: ' + currentImageName
+		mainContainer.appendChild(name);
+
+		for (var i = 0; i < arraySize; i++) {
+			let div = document.createElement("div");
+			div.innerHTML = allPredictions[i].tagName + ': ' + allPredictions[i].probability
+			mainContainer.appendChild(div);
+		}
+	}
+</script>
 </body>
 </html>
